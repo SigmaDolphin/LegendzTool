@@ -94,7 +94,7 @@
         Form1.ComboBox1.Items.Insert(90, "Chibi Shiron")
         Form1.ComboBox1.Items.Insert(91, "Blazedragon")
         Form1.ComboBox1.Items.Insert(92, "Manga Windragon")
-        Form1.ComboBox1.Items.Insert(93, "Griffon")
+        Form1.ComboBox1.Items.Insert(93, "Gryphon")
         Form1.ComboBox1.Items.Insert(94, "Big Foot")
         Form1.ComboBox1.Items.Insert(95, "Tiamat")
         Form1.ComboBox1.Items.Insert(96, "Windragon")
