@@ -1,4 +1,4 @@
-Imports System.Xml
+﻿Imports System.Xml
 Module Module1
 
     Sub LegendzIndexes(ByVal exepath As String)
@@ -97,8 +97,45 @@ Module Module1
                 Form1.ShiftE1.Items.Insert(count, dv(index)("name").ToString())
                 Form1.ShiftE2.Items.Insert(count, dv(index)("name").ToString())
                 Form1.ShiftE3.Items.Insert(count, dv(index)("name").ToString())
+
+                Form1.StMove1.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove2.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove3.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove4.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove5.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove6.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove7.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove8.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove9.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove10.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove11.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove12.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove13.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove14.Items.Insert(count, dv(index)("name").ToString())
+                Form1.StMove15.Items.Insert(count, dv(index)("name").ToString())
+
+                Form1.CurMove1.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove2.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove3.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove4.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove5.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove6.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove7.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove8.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove9.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove10.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove11.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove12.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove13.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove14.Items.Insert(count, dv(index)("name").ToString())
+                Form1.CurMove15.Items.Insert(count, dv(index)("name").ToString())
             End If
             count = count + 1
         Loop
+
     End Sub
+
+
+
+
 End Module

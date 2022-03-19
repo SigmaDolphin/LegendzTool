@@ -4,16 +4,20 @@
     Dim filePath As String
     Dim offset As Integer
     Dim spriteIndex As Integer
+    Dim exepath As String
     Dim oDialog As New OpenFileDialog
     Dim sDialog As New SaveFileDialog
     Dim sprite As New Bitmap(24, 32)
 
+
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        LegendzDB()
+        exepath = Application.StartupPath & "\"
+        LegendzIndexes(exepath)
         spriteIndex = 0
         For Each sp As String In My.Computer.Ports.SerialPortNames
             ComboBox2.Items.Add(sp)
         Next
+        Me.Size = New Size(610, 700)
     End Sub
 
     'Load File
@@ -26,7 +30,7 @@
         filePath = oDialog.FileName
         oDialog.FileName = ""
         Legendz = System.IO.File.ReadAllBytes(filePath)
-        ComboBox1.SelectedIndex = Legendz(770)
+        readLegendz(Legendz)
         Label2.Text = 0
         traceSprite(0)
     End Sub
@@ -51,9 +55,7 @@
         SerialPort1.Open()
         SerialPort1.Write("W")
         Do
-            System.Threading.Thread.Sleep(20)
             SerialPort1.Write(Legendz, offset, 1)
-            System.Threading.Thread.Sleep(20)
             offset = offset + 1
             Application.DoEvents()
         Loop While offset < 1024
@@ -64,6 +66,10 @@
     'Read from Chip
     Private Sub ReadButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReadButton.Click
         offset = 0
+        If ComboBox2.SelectedItem = "" Then
+            MsgBox("Select a COM Port", 16, "Legendz Tool")
+            Exit Sub
+        End If
         SerialPort1.PortName = ComboBox2.SelectedItem
         SerialPort1.Open()
         SerialPort1.Write("R")
@@ -73,7 +79,7 @@
             Application.DoEvents()
         Loop While offset < 1024
         SerialPort1.Close()
-        ComboBox1.SelectedIndex = Legendz(770)
+        readLegendz(Legendz)
         Label2.Text = 0
         traceSprite(0)
     End Sub
@@ -88,6 +94,9 @@
         SerialPort1.Close()
     End Sub
 
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        Legendz(770) = ComboBox1.SelectedIndex
+    End Sub
 
     Sub traceSprite(ByVal index As Integer)
         Dim x As Integer
@@ -274,5 +283,67 @@
                 Loop
             Next
         Next
+    End Sub
+
+    Sub readLegendz(ByRef LegendzData() As Byte)
+
+        Dim startingMoves As ComboBox() = {StMove1, StMove2, StMove3, StMove4, StMove5, StMove6, StMove7, StMove8, StMove9, StMove10, StMove11, StMove12, StMove13, StMove14, StMove15}
+        Dim currentMoves As ComboBox() = {CurMove1, CurMove2, CurMove3, CurMove4, CurMove5, CurMove6, CurMove7, CurMove8, CurMove9, CurMove10, CurMove11, CurMove12, CurMove13, CurMove14, CurMove15}
+
+
+        ComboBox1.SelectedIndex = LegendzData(770)
+        ElementC.SelectedIndex = LegendzData(789)
+        RankC.SelectedIndex = LegendzData(790)
+        BaseHP.Text = SwapEndianness(LegendzData(792), LegendzData(791))
+        BaseMA.Text = LegendzData(793)
+        BaseCoun.Text = LegendzData(794)
+        BasePA.Text = LegendzData(795)
+        BaseRec.Text = LegendzData(796)
+        LifespanT.Text = SwapEndianness(LegendzData(815), LegendzData(814))
+        TemperatureC.SelectedIndex = LegendzData(816)
+        HumidityC.SelectedIndex = LegendzData(817)
+
+        ShiftE1.SelectedIndex = LegendzData(819)
+        ShiftE2.SelectedIndex = LegendzData(820)
+        ShiftE3.SelectedIndex = LegendzData(821)
+
+        CurrentHPT.Text = SwapEndianness(LegendzData(853), LegendzData(852))
+        HPMod.Text = SwapEndianness(LegendzData(855), LegendzData(854))
+        MAMod.Text = LegendzData(856)
+        CounMod.Text = LegendzData(857)
+        PAMod.Text = LegendzData(858)
+        RecMod.Text = LegendzData(859)
+
+        AgeT.Text = SwapEndianness(LegendzData(879), LegendzData(878))
+        CheckBox1.Checked = LegendzData(861)
+
+        For i = 0 To 14
+            startingMoves(i).SelectedIndex = LegendzData(797 + i)
+        Next
+
+        For i = 0 To 14
+            currentMoves(i).SelectedIndex = LegendzData(863 + i)
+        Next
+
+    End Sub
+
+    Public Function SwapEndianness(ByVal byte1 As Byte, ByVal byte2 As Byte) As Long
+        Dim bytebuffer As String
+
+        bytebuffer = IIf(byte1 < &H10, "0", "") & Hex$(byte1)
+        bytebuffer = Hex(byte2) & bytebuffer
+        bytebuffer = Int("&H" & bytebuffer)
+        Return bytebuffer
+
+    End Function
+
+    Private Sub MovesB_Click(sender As Object, e As EventArgs) Handles MovesB.Click
+        If Me.Size.Width = 610 Then
+            Me.Size = New Size(1200, 700)
+            MovesB.Text = "Moves <<"
+        ElseIf Me.Size.Width = 1200 Then
+            Me.Size = New Size(610, 700)
+            MovesB.Text = "Moves >>"
+        End If
     End Sub
 End Class
