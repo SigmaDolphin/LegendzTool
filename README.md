@@ -55,4 +55,5 @@ Show/Edit GBA games save data
 
 # CHANGELOG
 1.0.0 - Initial Release
+
 1.5.0 - First part of major 2.0 update, added a lot of data for visibility only
